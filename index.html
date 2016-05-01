@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+  <head>
+    <style>
+      body{
+        overflow: hidden; /* required to hide stupid little window scrolly bars */
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="panel"></canvas>
+    <img id="bg" src="background.png">
+    <script>
+      var bg = document.getElementById("bg");
+      var img = new Image();
+      img.src="mario.png";
+      img.onload = initialize;
+      function initialize(){
+        var c = document.getElementById("panel");
+        c.width = window.innerWidth;
+        c.height = window.innerHeight;
+        var ctx = document.getElementById("panel").getContext("2d");
+        ctx.fillStyle = "#FFFFFF";
+        var xpos = c.width/2-50, ypos = c.height/2-75;
+
+        document.addEventListener("keydown", function(e){
+          switch (e.keyCode){
+            case 37: xpos-=10; break;
+            case 38: ypos-=10; break;
+            case 39: xpos+=10; break;
+            case 40: ypos+=10; break;
+          }
+        });
+        animate();
+
+        function animate(){
+          ctx.drawImage(bg, 0, 0, c.width, c.height);
+          //ctx.strokeRect(xpos, ypos, 100, 100);
+          ctx.drawImage(img, xpos, ypos, 100, 100);
+          window.requestAnimationFrame(animate);
+        }
+      }
+    </script>
+  </body>
+</html>
